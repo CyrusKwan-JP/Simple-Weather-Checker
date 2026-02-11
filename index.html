@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja" class="box-border">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>簡易天気チェッカー</title>
+  <link rel="stylesheet" href="./css/output.css" />
+  <link rel="stylesheet" href="./css/popup.css" />
+  <link rel="stylesheet" href="./css/animation.css" />
+  <script src="./js/fetchWeather.js" defer></script>
+  <script src="./js/getLocation.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="bg-gray-800 flex h-screen items-center justify-center">
+  <div id="card"
+    class="bg-linear-to-br from-emerald-500 to-blue-500 text-white rounded-3xl py-6 sm:py-10 px-5 sm:px-9 text-center z-999">
+
+    <div class="flex">
+      <span class="font-bold flex rounded-2xl p-4 w-fit mb-2 -mt-4 text-base sm:text-lg">簡易天気チェッカー</span>
+      <span id="current-time"
+        class="font-bold flex justify-end ml-auto rounded-2xl p-4 w-fit mb-2 -mt-4 text-base sm:text-lg"></span>
+    </div>
+
+    <!-- 検索バー -->
+    <div id="search" class="w-full flex items-center bg-white rounded-3xl sm:rounded-4xl shadow-lg">
+      <input type="search" name="search-bar" id="search-bar" placeholder="国、市名を入力してください…" spellcheck="false"
+        class="flex border-0 outline-0 bg-transparent text-[#555] py-2 sm:py-2.5 sm:px-6 px-4 h-12 sm:h-16 text-base mr-4 sm:text-xl" />
+
+      <!-- 検索アイコン -->
+      <button id="search-btn"
+        class="tooltip-container mr-3 border-0 outline-none bg-emerald-100 rounded-full w-12 h-12 sm:w-16 sm:h-16 shadow-2xl my-2 cursor-pointer flex items-center justify-center transition duration-300">
+        <i class="fa-solid fa-magnifying-glass text-gray-600 "></i>
+        <span class="tooltip-text">検索</span>
+      </button>
+
+      <!-- 現在地の天気を取得 -->
+      <button id="current-location-btn"
+        class="tooltip-container mr-3 border-0 outline-none bg-emerald-100 rounded-full w-12 h-12 sm:w-16 sm:h-16 shadow-2xl my-2 cursor-pointer flex items-center justify-center transition duration-300">
+        <i class="fa-solid fa-location-dot text-gray-600"></i>
+        <span class="tooltip-text">現在地の天気を取得</span>
+      </button>
+
+      <!-- 設定アイコン -->
+      <button id="setting-btn"
+        class="tooltip-container mr-3 border-0 outline-none bg-emerald-100 rounded-full w-12 h-12 sm:w-16 sm:h-16 shadow-2xl my-2 cursor-pointer flex items-center justify-center transition duration-300">
+        <i class="fa-solid fa-gear text-gray-600"></i>
+        <span class="tooltip-text">設定</span>
+      </button>
+    </div>
+
+    <!-- エラーメッセージ -->
+    <div id="error"
+      class="-mb-2 mt-4 text-white font-black text-base sm:text-lg hidden bg-red-500 rounded-2xl py-3 sm:-mb-6">
+      <p>エラー: 正しい国、市名を入力してください。</p>
+    </div>
+
+    <div id="weatherContainer" class="hidden">
+
+      <!-- 天気アイコン -->
+      <img src="" id="weather-icon" alt="" class="w-1/2 mt-12 mx-auto" />
+
+      <!-- 気温 -->
+      <div class="items-center justify-center mb-4 font-bold">
+        <h1 id="main-temp" class="text-[4rem] sm:text-[5.5rem]"></h1>
+
+        <div class="flex flex-col ml-4 items-center text-base sm:text-lg">
+          <!-- 体感温度 -->
+          <span id="temp-feels"></span>
+          <div class="flex gap-6 mt-1 mb-2">
+            <!-- 最高気温 -->
+            <span id="temp-max" class="text-orange-200"></span>
+            <!-- 最低気温 -->
+            <span id="temp-min" class="text-blue-100"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 国名・都市名 -->
+      <h2 id="city" class="text-4xl sm:text-5xl font-bold">
+        <a id="city-link" href="" target="_blank" rel="noopener noreferrer"></a>
+      </h2>
+      <h4 id="country-name" class="text-lg sm:text-xl"></h4>
+
+      <div id="details" class="flex items-center justify-between py-0 px-4 sm:px-5 mt-4 sm:mt-6">
+        <!-- 湿度データ -->
+        <div id="humidity" class="flex items-center text-left">
+          <img src="./img/humidity.svg" alt="湿度アイコン" class="w-16 sm:w-20 mr-2" />
+          <div>
+            <p class="text-xl sm:text-2xl -mt-1.5"></p>
+            <p>湿度</p>
+          </div>
+        </div>
+
+        <!-- 風速データ -->
+        <div id="wind" class="flex items-center text-left">
+          <img src="./img/wind.svg" alt="風速アイコン" class="w-16 sm:w-20" />
+          <div>
+            <p class="text-xl sm:text-2xl -mt-1.5"></p>
+            <p>風速</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 設定パネル -->
+  <div id="setting"
+    class="bg-linear-to-br from-emerald-500 to-blue-500 text-white rounded-3xl py-6 sm:py-10 px-5 sm:px-9 text-center hidden flex items-center justify-center z-50">
+    <label class="relative inline-flex items-center cursor-pointer">
+      <input type="checkbox" value="" class="sr-only peer" id="temp-unit">
+      <div class="group peer ring-0 bg-emerald-500 text-black 
+              rounded-full outline-none duration-300 after:duration-300 
+              w-22 h-10 shadow-md
+              peer-focus:outline-none after:content-['°C'] 
+              after:rounded-full after:absolute after:bg-gray-50 
+              after:outline-none after:h-8 after:w-8 after:top-1 
+              after:left-1 after:-rotate-360 after:flex after:justify-center 
+              after:items-center peer-checked:after:translate-x-12 
+              peer-checked:after:content-['°F'] peer-hover:after:scale-95 
+              peer-checked:after:rotate-0">
+      </div><span class="font-bold ml-5 text-nowrap">温度単位</span>
+    </label>
+  </div>
+
+  <div class="absolute right-3 bottom-2">
+    <span class="text-sm text-stone-400">Weather data provided by <a href="https://openweathermap.org/" target="_blank"
+        rel="noopener noreferrer">OpenWeatherMap.org</a></span>
+
+  </div>
+</body>
+
+</html>

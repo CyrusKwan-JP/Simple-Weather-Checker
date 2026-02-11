@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="blur" x="-.24684" y="-.27097" width="1.4937" height="1.6939">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <feOffset dx="0" dy="4" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA slope="0.05" type="linear" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    
+    <g id="water-droplet-composite">
+      <path d="M0,0 C -2.5,3 -2.5,6 0,8.5 C 2.5,6 2.5,3 0,0 Z" fill="#bbbbbb" />
+      
+      <ellipse cx="-0.8" cy="2.5" rx="0.8" ry="1.4" fill="#ffffff" opacity="0.9" transform="rotate(-20 -0.8 2.5)"/>
+    </g>
+  </defs>
+  
+  <g transform="translate(16 -2)" filter="url(#blur)">
+    <g class="am-weather-humidity-heavy" stroke="none">
+      
+      <g transform="translate(8, 0)">
+        <g>
+          <use href="#water-droplet-composite" y="10" />
+          <use href="#water-droplet-composite" y="30" />
+          <use href="#water-droplet-composite" y="-30" />
+          <use href="#water-droplet-composite" y="-10" />
+          
+          <animateTransform attributeName="transform" type="translate"
+            from="0 0" to="0 40" dur="3s" repeatCount="indefinite" />
+        </g>
+      </g>
+      
+      <g transform="translate(20, 0)">
+        <g>
+          <use href="#water-droplet-composite" y="5" />
+          <use href="#water-droplet-composite" y="25" />
+          <use href="#water-droplet-composite" y="45" />
+          <use href="#water-droplet-composite" y="-45" />
+          <use href="#water-droplet-composite" y="-25" />
+          <use href="#water-droplet-composite" y="-5" />
+
+          <animateTransform attributeName="transform" type="translate"
+            from="0 0" to="0 50" dur="4.5s" repeatCount="indefinite" begin="-1s" />
+        </g>
+      </g>
+      
+      <g transform="translate(32, 0)">
+        <g>
+          <use href="#water-droplet-composite" y="15" />
+          <use href="#water-droplet-composite" y="35" />
+          <use href="#water-droplet-composite" y="-25" />
+          <use href="#water-droplet-composite" y="-5" />
+
+          <animateTransform attributeName="transform" type="translate"
+            from="0 0" to="0 40" dur="2.5s" repeatCount="indefinite" begin="-0.5s" />
+        </g>
+      </g>
+      
+      <g transform="translate(44, 0)">
+        <g>
+          <use href="#water-droplet-composite" y="0" />
+          <use href="#water-droplet-composite" y="22" />
+          <use href="#water-droplet-composite" y="-45" />
+          <use href="#water-droplet-composite" y="-23" />
+
+          <animateTransform attributeName="transform" type="translate"
+            from="0 0" to="0 45" dur="3.8s" repeatCount="indefinite" begin="-2s" />
+        </g>
+      </g>
+      
+    </g>
+  </g>
+</svg>
