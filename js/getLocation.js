@@ -17,6 +17,8 @@ if (currentLocationBtn) {
       let latitude = crd.latitude;
       let longitude = crd.longitude;
 
+      alert(`Lat: ${latitude}, Lon: ${longitude}`);
+
       getCurrentLocation(latitude, longitude);
     }
 
