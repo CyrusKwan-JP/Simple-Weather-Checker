@@ -17,8 +17,6 @@ if (currentLocationBtn) {
       let latitude = crd.latitude;
       let longitude = crd.longitude;
 
-      alert(`Lat: ${latitude}, Lon: ${longitude}`);
-
       getCurrentLocation(latitude, longitude);
     }
 
@@ -37,7 +35,6 @@ if (currentLocationBtn) {
     const reverseLocationApiUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&&appid=${apiKey}`;
     const currentLocation = await fetch(reverseLocationApiUrl);
 
-    alert(currentLocation);
     if (currentLocation.ok) {
       const data = await currentLocation.json();
       const userLanguage = navigator.language || navigator.userLanguage; // ユーザーの言語を取得

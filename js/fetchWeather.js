@@ -81,6 +81,7 @@ function showErrorMessage() {
 
 // 天気検索の処理
 async function checkWeather(city) {
+  alert(city);
   const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
   if (response.status !== 200) {
